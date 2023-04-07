@@ -1,0 +1,19 @@
+﻿@model CityUpdateResponse
+
+<table class="table table-bordered" id="example" width="100%" cellspacing="0">
+    <tbody>
+        <tr>
+            <td>@Model.data.Id</td>
+            <td>
+                <span data-id="@Model.data.Id" class="table-span">@Model.data.Name</span>
+            </td>
+            <td>@Model.data.CountryName</td>
+            <td>
+                <button class="btn btn-warning" id="deleteCity" data-id="@Model.data.Id"><i class="fa-solid fa-trash"></i></button>
+                <button id="update-get" data-id="@Model.data.Id" type="button" class="btn btn-primary update-btn ml-auto" data-bs-toggle="modal" data-bs-target="#editModal">
+                    <i class="fa-solid fa-pen-to-square"></i>
+                </button>
+            </td>
+        </tr>
+    </tbody>
+</table>

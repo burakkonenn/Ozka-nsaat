@@ -1,0 +1,291 @@
+﻿@using Ozkaya.Web.Areas.Cities.Models;
+@using Ozkaya.Web.Models;
+@model CityDetails
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Cities/Views/Shared/_citiesLayout.cshtml";
+}
+
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-ajax-unobtrusive/3.2.6/jquery.unobtrusive-ajax.min.js"></script>
+
+
+<script>
+    $(document).ready(function () {
+
+        $('#example').DataTable(
+            {
+                "dom": '<"dt-buttons"Bf><"clear">lirtp',
+                "paging": true,
+                "autoWidth": true,
+                "buttons": [
+                    'colvis',
+                    'copyHtml5',
+                    'csvHtml5',
+                    'excelHtml5',
+                    'pdfHtml5',
+                    'print'
+                ]
+            }
+        );
+    });
+</script>
+
+
+
+<div class="row aaaa">
+    <div class="col-md-12">
+
+        <h1 class="header-text"> ÖZKA İNŞAAT </h1>
+        <div class="mb-4 d-flex justify-content-between">
+
+            <h4 class="header-sub-text">
+                Şehirler Bilgisi
+            </h4>
+
+            <button type="button" class="btn btn-primary ml-auto create-button" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                Yeni Şehir Ekle
+            </button>
+
+
+            <form id="formSaveCity">
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <div class="d-flex flex-column">
+                                    <h1 class="modal-title" id="exampleModalLabel">Özka İnşaat</h1>
+                                </div>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="mb-3">
+                                    <label class="form-label">Şehir Adı</label>
+                                    <input asp-for="CreateCity.Name" type="text" class="form-control">
+                                    <span asp-validation-for="CreateCity.Name"></span>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Ülke Adı</label>
+                                    <input asp-for="CreateCity.CountryName" class="form-control">
+                                    <span asp-validation-for="CreateCity.CountryName"></span>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" id="createCityBtn" class="btn btn-primary">Kaydet</button>
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+            <form id="formUpdateCity">
+                <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                        <input type="hidden" class="form-control" asp-for="UpdateCity.CityId" />
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <div class="d-flex flex-column">
+                                    <h1 class="modal-title" id="exampleModalLabel">Özka İnşaat</h1>
+                                </div>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="mb-3">
+                                    <label class="form-label">Şehir Adı</label>
+                                    <input asp-for="UpdateCity.CityName" type="text" class="form-control">
+                                    <span asp-validation-for="UpdateCity.CityName"></span>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Ülke Adı</label>
+                                    <input asp-for="UpdateCity.CountryName" class="form-control">
+                                    <span asp-validation-for="UpdateCity.CountryName"></span>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" id="updateCityBtn" class="btn btn-primary">Kaydet</button>
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div class="card mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Şehirler Bilgisi</h6>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="example" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>Şehir Adı</th>
+                                <th>Ülke Adı</th>
+                                <th>İşlemler</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var city in Model.CitiesResponse.data)
+                            {
+                                <tr>
+                                    <td>@city.Id</td>
+                                    <td>
+                                        @city.Name
+                                    </td>
+                                    <td>@city.CountryName</td>
+                                    <td>
+                                        <button class="btn btn-warning" id="deleteCity" data-id="@city.Id"><i class="fa-solid fa-trash"></i></button>
+                                        <button id="update-get" data-id="@city.Id" type="button" class="btn btn-primary update-btn ml-auto" data-bs-toggle="modal" data-bs-target="#editModal">
+                                            <i class="fa-solid fa-pen-to-square"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts{
+    <script>
+
+
+
+        $("#createCityBtn").click(function () {
+            var url = "/city/create";
+            var method = "POST";
+            var data = { Name: $("#CreateCity_Name").val(), CountryName: $("#CreateCity_CountryName").val() };
+
+            $.ajax({
+                type: method,
+                url: url,
+                data: data,
+                dataType: "json",
+                success: function (result) {
+                    if (result.isSuccess == true) {
+                        var rows = "<tr>"
+                            + "<td>" + result.data.id + "</td>"
+                            + "<td>" + result.data.name + "</td>"
+                            + "<td>" + result.data.countryName + "</td>"
+                            + "</tr>";
+                        $('table tbody').append(rows);
+
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Bilgilendirme',
+                            text: result.message,
+                            footer: ''
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                window.location = "/cities";
+                            }
+                        });
+                        $("#formSaveCity")[0].reset();
+                    }
+                    else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Hata',
+                            text: result.message,
+                            footer: ''
+                        });
+                    }
+                },
+                error: function () {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Hata',
+                        text: "Beklenmedik bir hata oluştu.",
+                        footer: ''
+                    });
+                }
+            });
+        });
+
+        $("#updateCityBtn").click(function () {
+            var url = "/city/update";
+            var method = "PUT";
+            var data = { CityId: $("#UpdateCity_CityId").val(), CityName: $("#UpdateCity_CityName").val(), CountryName: $("#UpdateCity_CountryName").val() };
+
+
+            $.ajax({
+                type: method,
+                url: url,
+                data: data,
+                success: function (result) {
+                    var id = $("#update-get").attr("data-id");
+                    console.log(id);
+
+                    $('.table').find("button[data-id='" + id + "']").parent().parent().html(result);
+
+              
+                },
+                error: function () {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Hata',
+                        text: "Beklenmedik bir hata oluştu.",
+                        footer: ''
+                    });
+                }
+            });
+        });
+
+        $(function () {
+            $("tbody").on("click", "#update-get", function () {
+                let btn = $(this);
+                let id = btn.data("id");
+                $.ajax({
+                    type: "GET",
+                    url: "/city/edit/" + id,
+                    success: function (response) {
+                        $("#UpdateCity_CityId").val(response.data.id)
+                        $("#UpdateCity_CityName").val(response.data.name)
+                        $("#UpdateCity_CountryName").val(response.data.countryName)
+                        var btnRow = $(this).closest("td").find(response.data.id);
+                    },
+                });
+            })
+        })
+
+        $(function () {
+            $("tbody").on("click", "#deleteCity", function () {
+                let btn = $(this);
+                let id = btn.data("id");
+                Swal.fire({
+                    title: 'Şehir bilgilerini silmek istediğinize emin misiniz?',
+                    icon: 'error',
+                    buttons: true,
+                    showCancelButton: true,
+                    dangerMode: true
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            type: "DELETE",
+                            url: "/city/remove/" + id,
+                            success: function () {
+                                btn.parent().parent().remove();
+                                Swal.fire(
+                                    'Şirket bilgileri başarılı bir şekilde silindi.',
+                                )
+                            },
+                        });
+                    }
+                    else {
+                    }
+                    return false;
+                });
+            });
+        });
+
+    </script>
+}

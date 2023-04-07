@@ -1,0 +1,100 @@
+﻿body {
+    font-family: 'DM Sans', sans-serif;
+    font-family: 'Open Sans', sans-serif;
+}
+.aaaa {
+    width:100% !important;
+}
+
+.header-text{
+    color:black;
+    font-weight:700;
+    font-size:30px;
+}
+.header-sub-text{
+    font-size:15px;
+}
+.create-button {
+    background-color: #3699FF;
+    border: none !important;
+    font-size:13px;
+    font-weight:500;
+    width:17%;
+    border-radius:10px;
+    padding:10px;
+}
+.create-button:hover{
+    background-color:deepskyblue;
+}
+table thead tr{
+    color:#3f4254 !important;
+    font-size:13px;
+}
+table tbody tr td {
+    color: #3f4254 !important;
+}
+.btn-warning {
+    font-size: 13px;
+    font-weight: 500;
+    border: none;
+    background-color: #F3F6F9 !important;
+    color: #7E8299 !important;
+}
+.update-btn {
+    background-color: #3699FF;
+    border: none;
+    font-size: 13px;
+    font-weight: 500;
+}
+tbody .btn{
+    width:30%;
+    float:right !important;
+    margin-left:10px;
+}
+.modal-title{
+    color:black;
+    font-size:20px;
+    font-weight:bold !important;
+}
+.form-label{
+    font-size:13px;
+    font-weight:500;
+}
+.modal .btn{
+    font-size:13px;
+    font-weight:500 !important;
+    padding:10px;
+    width:15% !important;
+}
+.table.dataTable{
+    border-collapse:collapse !important;
+}
+.dt-button {
+    background-color: #8950FC !important;
+    border:none;
+    color:white;
+    font-size:13px;
+    padding:10px;
+    border-radius:7px;
+    width:7%;
+    margin-bottom:20px;
+}
+.dt-button:hover{
+    background-color:mediumpurple !important;
+}
+.card {
+    border: 1px solid gainsboro !important;
+}
+.btn-primary{
+    background-color:dodgerblue !important;
+    border:none !important;
+}
+.swal2-title{
+    font-size:15px !important;
+}
+.swal2-icon{
+    display:none !important;
+}
+.swal2-actions button {
+    font-size: 13px !important;
+}
